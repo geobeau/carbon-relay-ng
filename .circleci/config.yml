@@ -51,4 +51,6 @@ workflows:
       - publish-github-release:
           requires:
             - build
-
+          filters:
+            tags:
+              only: /^.*$/
