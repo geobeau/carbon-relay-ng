@@ -21,13 +21,11 @@ jobs:
       # but because git checkout will change the timestamps and mode, it'll generate slight differences, and it's hard to filter those out
       # so for now, we just let it slip and assume devs will do a good enough job maintaining the generated data
       # - git diff --exit-code
-      - run: make build-win
-      - run: git describe --tags --always | sed 's/^v//' > version.txt
+      - run: git describe --tags --always > version.txt
       - persist_to_workspace:
           root: .
           paths:
             - carbon-relay-ng
-            - carbon-relay-ng.exe
             - version.txt
 
   publish-github-release:
@@ -59,4 +57,4 @@ workflows:
             - build
           filters:
             tags:
-              only: /^v.*/
+              only: /^v\d+\.\d+\.\d+\+criteo\d*$/
